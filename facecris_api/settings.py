@@ -1,7 +1,13 @@
+from datetime import timedelta
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Ruta para los archivos de medios
+MEDIA_URL = "/post_images/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "post_images")
 
 
 # Quick-start development settings - unsuitable for production
@@ -122,7 +128,9 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -131,20 +139,24 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
 AUTH_USER_MODEL = "blog.CustomUser"
 
 DJOSER = {
-    "LOGIN_FIELD": "email",  # Usar el email para login
-    "USER_CREATE_PASSWORD_RETYPE": True,  # Requiere reescribir la contraseña
+    "LOGIN_FIELD": "email",
+    "USER_CREATE_PASSWORD_RETYPE": True,
     "SERIALIZERS": {
-        "user_create": "djoser.serializers.UserCreateSerializer",  # Usa el serializer por defecto para creación de usuarios
+        "user_create": "djoser.serializers.UserCreateSerializer",
         "user": "djoser.serializers.UserSerializer",
     },
 }
 
-REST_FRAMEWORK = {
-    ...: ...,
-    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=400),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=4),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }

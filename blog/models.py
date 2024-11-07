@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import (
@@ -47,10 +48,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
-    )  # Corregido
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            if os.path.isfile(self.image.path):
+                os.remove(self.image.path)
+        super(Post, self).delete(*args, **kwargs)
