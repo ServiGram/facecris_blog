@@ -9,6 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        python-version: [3.10.12]  # Añadido para definir python-version
+
     services:
       mysql:
         image: mysql:8.0
@@ -45,7 +49,6 @@ jobs:
       - name: Run migrations
         env:
           MYSQL_DATABASE: facecris_db
-          MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
@@ -55,11 +58,8 @@ jobs:
       - name: Run tests
         env:
           MYSQL_DATABASE: facecris_db
-          MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
           source venv/bin/activate
           python manage.py test
-
-
