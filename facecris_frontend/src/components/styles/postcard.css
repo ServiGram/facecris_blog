@@ -1,0 +1,49 @@
+/* PostCard.css */
+.post-card {
+    min-height: 300px;
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-card .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-card .card-content {
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.post-card .card-content-expanded {
+    max-height: none;
+}
+
+.post-card .btn-read-more {
+    padding: 0;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.post-card .btn-delete {
+    color: white;
+    background-color: #dc3545;
+}
+
+img {
+    max-width: 300px;
+    max-height: 150px;
+    object-fit: cover;
+}
+
+.card-title {
+    white-space: normal;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
