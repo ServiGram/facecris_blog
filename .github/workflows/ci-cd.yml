@@ -4,14 +4,10 @@ on:
   push:
     branches:
       - main
-      
+
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        python-version: [3.10.12]  # Añadido para definir python-version
 
     services:
       mysql:
@@ -25,12 +21,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Cambiado a la versión más reciente
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - name: Set up Python
+        uses: actions/setup-python@v4  # Cambiado a la versión más reciente
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.10
 
       - name: Install dependencies
         run: |
@@ -49,6 +45,7 @@ jobs:
       - name: Run migrations
         env:
           MYSQL_DATABASE: facecris_db
+          MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
@@ -58,8 +55,10 @@ jobs:
       - name: Run tests
         env:
           MYSQL_DATABASE: facecris_db
+          MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
           source venv/bin/activate
           python manage.py test
+
