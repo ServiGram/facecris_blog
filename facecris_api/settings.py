@@ -81,7 +81,7 @@ DATABASES = {
         "NAME": "facecris_db",
         "USER": "root",
         "PASSWORD": "M1P@ssw0rd!Str0ng2024",
-        "HOST": "localhost",
+        "HOST": "127.0.0.1",
         "PORT": "3306",
     }
 }

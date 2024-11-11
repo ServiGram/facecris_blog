@@ -11,24 +11,20 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8.0 
+        image: mysql:8.0
         env:
           MYSQL_DATABASE: facecris_db
-          MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
+        ports:
+          - 3306:3306
         options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
-
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.10.12]
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -38,12 +34,18 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Wait for MySQL to be ready
-        run: sleep 15
+      - name: Wait for MySQL to start
+        run: |
+          until nc -z -v -w30 127.0.0.1 3306
+          do
+            echo "Waiting for MySQL..."
+            sleep 1
+          done
 
       - name: Run migrations
         env:
           MYSQL_DATABASE: facecris_db
+          MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
@@ -53,43 +55,11 @@ jobs:
       - name: Run tests
         env:
           MYSQL_DATABASE: facecris_db
+          MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
           source venv/bin/activate
           python manage.py test
 
-  deploy:
-    needs: test
-    runs-on: self-hosted
-
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.10.12]
-
-    steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v3
-        with:
-          clean: false
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install dependencies
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt
-
-      - name: Run migrations
-        run: |
-          source venv/bin/activate
-          python manage.py migrate
-
-      - name: Restart supervisor
-        run: sudo service supervisor restart
 
