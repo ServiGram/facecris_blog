@@ -24,10 +24,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
-
-      - name: Clone repository to custom directory
-        run: git clone https://github.com/ServiGram/facecris_blog.git /home/frandjans/actions-runner/_work
-        
+          repository: ServiGram/facecris_blog
+          path: /home/frandjans/actions-runner/_work        
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
