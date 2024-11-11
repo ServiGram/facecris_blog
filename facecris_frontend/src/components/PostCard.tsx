@@ -25,12 +25,9 @@ export function PostCard({ post, onPostDelete }: PostCardProps) {
         }
     };
 
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isExpanded] = useState(false);
     const { isAuthenticated } = useAuth();
 
-    const toggleExpanded = () => {
-        setIsExpanded(!isExpanded);
-    };
 
     truncateTitle('.card-title', 40);
 

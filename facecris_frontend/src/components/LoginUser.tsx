@@ -11,7 +11,7 @@ export function Login() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            login(email, password);
+            login();
             navigate('/');
         } catch (error) {
             console.error('Login failed', error);

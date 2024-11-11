@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+type User = {
+    id: number;
+    username: string;
+    is_admin: boolean;
+};
+
 export const AdminPage = () => {
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<User[]>([]);
 
     const fetchUsers = async () => {
         const token = localStorage.getItem('access_token');

@@ -6,8 +6,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Ruta para los archivos de medios
-MEDIA_URL = "/post_images/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "post_images")
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 # Quick-start development settings - unsuitable for production
@@ -19,7 +19,7 @@ SECRET_KEY = "django-insecure-$5_!1&d(yn0p-tc#w8^wyckwcpb0315j0m_s=!7yxgnp1qvue#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["facecris.net", "www.facecris.net"]
+ALLOWED_HOSTS = ["facecris.net", "www.facecris.net", "127.0.0.1", "localhost"]
 
 
 # Application definition
