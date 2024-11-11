@@ -11,14 +11,12 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.7 
+        image: mysql:5.6 
         env:
           MYSQL_DATABASE: facecris_db
           MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
-        ports:
-          - 3306:3306
         options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
 
     strategy:
