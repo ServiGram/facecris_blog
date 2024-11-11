@@ -11,10 +11,9 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.6 
+        image: mysql:8.0 
         env:
           MYSQL_DATABASE: facecris_db
-          MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
         options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -45,7 +44,6 @@ jobs:
       - name: Run migrations
         env:
           MYSQL_DATABASE: facecris_db
-          MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
@@ -55,7 +53,6 @@ jobs:
       - name: Run tests
         env:
           MYSQL_DATABASE: facecris_db
-          MYSQL_USER: root
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
