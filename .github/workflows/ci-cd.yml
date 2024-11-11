@@ -25,6 +25,9 @@ jobs:
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
 
+      - name: Set working directory
+        run: cd /home/frandjans/actions-runner/_work/facecris_blog/facecris_blog
+
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
