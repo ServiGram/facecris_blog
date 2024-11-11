@@ -9,24 +9,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_DATABASE: facecris_db
-          MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.10, 3.11]  # Usa versiones compatibles con Django 5.1.2
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3  # Cambiado a la versión más reciente
-
       - name: Set up Python
-        uses: actions/setup-python@v4  # Cambiado a la versión más reciente
+        uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
         run: |
