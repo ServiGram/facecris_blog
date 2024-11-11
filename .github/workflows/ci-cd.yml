@@ -24,8 +24,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
-          repository: ServiGram/facecris_blog
-          path: /home/frandjans/actions-runner/_work        
+          path: facecris_blog 
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -34,6 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd facecris_blog
           python -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
@@ -53,6 +53,7 @@ jobs:
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
+          cd facecris_blog
           source venv/bin/activate
           python manage.py migrate
 
@@ -63,6 +64,6 @@ jobs:
           MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
           MYSQL_HOST: 127.0.0.1
         run: |
+          cd facecris_blog
           source venv/bin/activate
           python manage.py test
-
