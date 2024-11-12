@@ -6,7 +6,7 @@ interface AuthContextProps {
     isAuthenticated: boolean;
     isAdmin: boolean;
     loading: boolean;
-    login: (email: string, password: string) => Promise<void>;
+    login: () => Promise<void>;
     logout: () => void;
 }
 
@@ -14,7 +14,7 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api';
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
@@ -48,21 +48,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         checkAuth();
     }, []);
 
-    const login = async (email: string, password: string) => {
-        try {
-
-            const response = await loginUser(email, password);
-            const token = response.data.access;
-            localStorage.setItem("access_token", token);
-
+    const login = async () => {
+        const token = localStorage.getItem("access_token");
+        if (token) {
             setIsAuthenticated(true);
-
-            const res = await userInfo();
-            const user = res.data;
-
-            setIsAdmin(user && user.is_admin);
-        } catch (error) {
-            console.error("Error en el inicio de sesión:", error);
+            userInfo().then((res) => {
+                const user = res.data;
+                setIsAdmin(user && user.is_admin);
+            });
         }
     };
 

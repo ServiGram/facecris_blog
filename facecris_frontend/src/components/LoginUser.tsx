@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../functions/AuthContext";
+import { loginUser } from "../api/user.api";
 
 export function Login() {
     const [email, setEmail] = useState('');
@@ -11,7 +12,10 @@ export function Login() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            login(email, password);
+            const response = await loginUser(email, password)
+            const token = response.data.access;
+            localStorage.setItem("access_token", token);
+            login();
             navigate('/');
         } catch (error) {
             console.error('Login failed', error);
