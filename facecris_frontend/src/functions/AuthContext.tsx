@@ -1,12 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
-import { userInfo } from '../api/user.api';
+import { loginUser, userInfo } from '../api/user.api';
 
 interface AuthContextProps {
     isAuthenticated: boolean;
     isAdmin: boolean;
     loading: boolean;
-    login: () => void;
+    login: (email: string, password: string) => Promise<void>;
     logout: () => void;
 }
 
@@ -47,15 +47,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         checkAuth();
     }, []);
 
-    const login = async () => {
-        const token = localStorage.getItem("access_token");
-        if (token) {
+    const login = async (email: string, password: string) => {
+        try {
+
+            const response = await loginUser(email, password);
+            const token = response.data.access;
+            localStorage.setItem("access_token", token);
+
             setIsAuthenticated(true);
+
             const res = await userInfo();
             const user = res.data;
+
             setIsAdmin(user && user.is_admin);
+        } catch (error) {
+            console.error("Error en el inicio de sesión:", error);
         }
     };
+
 
     const logout = () => {
         localStorage.removeItem("access_token");

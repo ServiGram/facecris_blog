@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-const API_BASE_URL = process.env.NODE_ENV === 'production'
-    ? 'http://facecris.net/api/posts/'
-    : 'http://127.0.0.1:8000/api/posts/';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000/api/posts/';
+
+const POSTS_ENDPOINT = `${API_BASE_URL}/posts/`;
 
 const postApi = axios.create({
-    baseURL: API_BASE_URL
+    baseURL: POSTS_ENDPOINT
 })
 
 //Puedo hacer el return asi
@@ -16,7 +16,7 @@ export const getAllPosts = () => {
 //Puedo hacer el return asi
 export const createPost = async (data) => {
     const token = localStorage.getItem('access_token');
-    return axios.post(API_BASE_URL, data, {
+    return axios.post(POSTS_ENDPOINT, data, {
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
