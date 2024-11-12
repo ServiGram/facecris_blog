@@ -70,9 +70,16 @@ jobs:
 
       - name: Deploy to Server
         env:
-          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "$SSH_KEY" > /tmp/deploy_key
           chmod 600 /tmp/deploy_key
-          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no frandjans@193.203.167.54 "cd /home/frandjans/actions-runner/_work && git pull || git clone git@github.com:ServiGram/facecris_blog.git ."
+          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no user@server_ip "
+          if [ -d /home/frandjans/facecris_blog/.git ]; then 
+              cd /home/frandjans/facecris_blog && git pull; 
+          else 
+              git clone git@github.com:ServiGram/facecris_blog.git /home/frandjans/facecris_blog; 
+          fi"
+          rm /tmp/deploy_key
+        
 
