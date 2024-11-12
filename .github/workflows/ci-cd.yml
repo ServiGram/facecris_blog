@@ -78,7 +78,7 @@ jobs:
           if [ -d /home/frandjans/facecris_blog/.git ]; then 
               cd /home/frandjans/facecris_blog && git pull; 
           else 
-              git clone git@github.com:ServiGram/facecris_blog.git /home/frandjans/facecris_blog; 
+              git clone git@github.com:ServiGram/facecris_blog.git /home/frandjans/actions-runner/_work/facecris_blog; 
           fi"
           rm /tmp/deploy_key
         
