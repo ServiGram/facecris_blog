@@ -1,7 +1,11 @@
 import axios from 'axios'
 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+    ? 'http://facecris.net/api'
+    : 'http://127.0.0.1:8000/api';
+
 const postApi = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/posts/"
+    baseURL: API_BASE_URL
 })
 
 //Puedo hacer el return asi

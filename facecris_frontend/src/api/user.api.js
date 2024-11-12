@@ -1,7 +1,11 @@
 import axios from 'axios'
 
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+    ? 'http://facecris.net/api'
+    : 'http://127.0.0.1:8000/api';
+
 const userApi = axios.create({
-    baseURL: "http://127.0.0.1:8000/api/auth/users/me/"
+    baseURL: API_BASE_URL
 })
 
 export const userInfo = async () => {

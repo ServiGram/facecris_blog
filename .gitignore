@@ -10,7 +10,5 @@ db.sqlite3
 node_modules/
 build/
 
-venv/
-
 # Para archivos de configuración específicos del sistema
 .DS_Store

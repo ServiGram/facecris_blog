@@ -5,7 +5,7 @@ import { userInfo } from '../api/user.api';
 interface AuthContextProps {
     isAuthenticated: boolean;
     isAdmin: boolean;
-    loading: boolean;  // Estado de carga
+    loading: boolean;
     login: () => void;
     logout: () => void;
 }
