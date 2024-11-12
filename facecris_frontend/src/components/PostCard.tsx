@@ -12,14 +12,14 @@ interface Post {
 
 interface PostCardProps {
     post: Post;
-    onPostDelete: () => Promise<void>; // Agregar el tipo de onPostDelete aquí
+    onPostDelete: () => Promise<void>;
 }
 
 export function PostCard({ post, onPostDelete }: PostCardProps) {
     const handleDelete = async () => {
         try {
-            await deletePost(post.id); // Llama a la función de eliminación
-            onPostDelete(); // Vuelve a cargar los posts al eliminar
+            await deletePost(post.id);
+            onPostDelete();
         } catch (error) {
             console.error("Error eliminando el post:", error);
         }

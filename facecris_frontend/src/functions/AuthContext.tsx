@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
-import { loginUser, userInfo } from '../api/user.api';
+import { userInfo } from '../api/user.api';
 
 interface AuthContextProps {
     isAuthenticated: boolean;
