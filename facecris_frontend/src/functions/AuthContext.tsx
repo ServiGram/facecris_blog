@@ -14,6 +14,7 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000/api';
 const AuthContext = createContext<AuthContextProps | null>(null);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
@@ -27,7 +28,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             const token = localStorage.getItem("access_token");
             if (token) {
                 try {
-                    const response = await axios.get('http://127.0.0.1:8000/api/auth/users/me/', {
+                    const response = await axios.get(`${API_BASE_URL}/auth/users/me/`, {
                         headers: { Authorization: `Bearer ${token}` },
                     });
                     setIsAuthenticated(true);
