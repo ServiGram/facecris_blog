@@ -74,7 +74,7 @@ jobs:
         run: |
           echo "$SSH_KEY" > /tmp/deploy_key
           chmod 600 /tmp/deploy_key
-          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no user@server_ip "
+          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no frandjans@193.203.167.54 "
           if [ -d /home/frandjans/facecris_blog/.git ]; then 
               cd /home/frandjans/facecris_blog && git pull; 
           else 
