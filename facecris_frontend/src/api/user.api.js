@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const API_BASE_URL = process.env.NODE_ENV === 'production'
     ? 'http://facecris.net/api'
@@ -6,12 +6,12 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
 
 const userApi = axios.create({
     baseURL: API_BASE_URL
-})
+});
 
 export const userInfo = async () => {
     const token = localStorage.getItem('access_token');
     try {
-        const response = await axios.get('http://127.0.0.1:8000/api/auth/users/me/', {
+        const response = await axios.get(`${API_BASE_URL}/auth/users/me/`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -24,7 +24,7 @@ export const userInfo = async () => {
 };
 
 export const loginUser = async (email, password) => {
-    return axios.post('http://127.0.0.1:8000/api/auth/jwt/create/', {
+    return axios.post(`${API_BASE_URL}/auth/jwt/create/`, {
         email,
         password
     });
