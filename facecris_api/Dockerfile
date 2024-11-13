@@ -9,4 +9,4 @@ RUN pip install --upgrade pip && pip install -r /app/requirements.txt
 
 COPY ./facecris_api /app/
 
-CMD ["/bin/bash"]
+CMD ["tail", "-f", "/dev/null"]
