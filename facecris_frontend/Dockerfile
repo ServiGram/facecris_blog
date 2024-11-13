@@ -7,6 +7,6 @@ COPY package.json /app/package.json
 
 RUN npm install
 
-COPY . /app/facecris_frontend
+COPY . /app/
 
 CMD ["npm", "start"]
