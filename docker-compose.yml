@@ -17,7 +17,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: facecris_api/Dockerfile
+      dockerfile: Dockerfile
     container_name: facecris_backend
     command: gunicorn wsgi:application --bind 0.0.0.0:8000
     volumes:
