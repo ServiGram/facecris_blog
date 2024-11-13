@@ -9,4 +9,4 @@ RUN pip install --upgrade pip && pip install -r /app/requirements.txt
 
 COPY ./facecris_api /app/
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "facecris_api.wsgi:application"]
+CMD ["/bin/bash"]
