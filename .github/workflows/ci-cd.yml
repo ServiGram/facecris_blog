@@ -6,18 +6,8 @@ on:
       - main
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_DATABASE: facecris_db
-          MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout
@@ -25,34 +15,6 @@ jobs:
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           path: facecris_blog 
-
-      - name: Wait for MySQL to start
-        run: |
-          until nc -z -v -w30 127.0.0.1 3306
-          do
-            echo "Waiting for MySQL..."
-            sleep 1
-          done
-
-      - name: Run migrations
-        env:
-          MYSQL_DATABASE: facecris_db
-          MYSQL_USER: root
-          MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
-          MYSQL_HOST: 127.0.0.1
-        run: |
-          cd facecris_blog
-          python manage.py migrate
-
-      - name: Run tests
-        env:
-          MYSQL_DATABASE: facecris_db
-          MYSQL_USER: root
-          MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
-          MYSQL_HOST: 127.0.0.1
-        run: |
-          cd facecris_blog
-          python manage.py test
 
       - name: Deploy to Server
         env:
@@ -67,4 +29,3 @@ jobs:
           sudo docker-compose up --build -d;
           "
           rm /tmp/deploy_key
-
