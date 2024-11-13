@@ -12,6 +12,7 @@ build/
 
 
 venv/
+.env
 
 # Para archivos de configuración específicos del sistema
 .DS_Store

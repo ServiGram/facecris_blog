@@ -1,6 +1,7 @@
 from datetime import timedelta
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,12 +15,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-$5_!1&d(yn0p-tc#w8^wyckwcpb0315j0m_s=!7yxgnp1qvue#"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "default_secret_key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["facecris.net", "www.facecris.net", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 
 # Application definition
@@ -79,11 +80,11 @@ WSGI_APPLICATION = "facecris_api.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "facecris_db",
-        "USER": "root",
-        "PASSWORD": "M1P@ssw0rd!Str0ng2024",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PORT": os.getenv("DB_PORT", "3306"),
     }
 }
 

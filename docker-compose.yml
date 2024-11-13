@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: facecris_api/Dockerfile # Asegúrate de que este Dockerfile sea para el backend
+    container_name: facecris_backend
+    command: gunicorn facecris_api.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./facecris_api:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env # Asegúrate de que contiene las variables necesarias para el backend
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: facecris_frontend/Dockerfile # Dockerfile específico para frontend
+    container_name: facecris_frontend
+    volumes:
+      - ./facecris_frontend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  db:
+    image: mysql:8.0
+    container_name: facecris_db
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
+      MYSQL_DATABASE: facecris_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: M1P@ssw0rd!Str0ng2024
+    ports:
+      - "3306:3306"
+
+volumes:
+  db_data:
