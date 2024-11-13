@@ -75,11 +75,9 @@ jobs:
           echo "$SSH_KEY" > /tmp/deploy_key
           chmod 600 /tmp/deploy_key
           ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no frandjans@193.203.167.54 "
-          if [ -d /home/frandjans/facecris_blog/.git ]; then 
-              cd /home/frandjans/actions-runner/_work/facecris_blog && git fetch --all && git reset --hard origin/main;
-          else 
-              git clone git@github.com:ServiGram/facecris_blog.git /home/frandjans/actions-runner/_work; 
-          fi"
+          cd ~/facecris_blog || git clone git@github.com:ServiGram/facecris_blog.git ~/facecris_blog;
+          cd ~/facecris_blog && git pull origin main;
+          sudo docker-compose down;
+          sudo docker-compose up --build -d;
+          "
           rm /tmp/deploy_key
-        
-
