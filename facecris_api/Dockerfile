@@ -3,9 +3,9 @@ FROM python:3.11
 
 WORKDIR /app
 
-COPY facecris_api/requirements.txt /app/requirements.txt
+COPY requirements.txt /app/requirements.txt
 
-RUN pip install --upgrade pip && pip install -r /app/facecris_api/requirements.txt
+RUN pip install --upgrade pip && pip install -r /app/facecris_blog/facecris_api/requirements.txt
 
 COPY . /app/facecris_api
 
