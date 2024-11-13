@@ -22,7 +22,7 @@ jobs:
         run: |
           echo "$SSH_KEY" > /tmp/deploy_key
           chmod 600 /tmp/deploy_key
-          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no frandjans@193.203.167.54 "
+          ssh -i /tmp/deploy_key -o StrictHostKeyChecking=no root@193.203.167.54 "
           cd ~/facecris_blog || git clone git@github.com:ServiGram/facecris_blog.git ~/facecris_blog;
           cd ~/facecris_blog && git pull origin main;
           sudo docker-compose down;
