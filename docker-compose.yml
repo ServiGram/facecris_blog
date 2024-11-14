@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: facecris_api/Dockerfile
     container_name: facecris_backend
-    command: gunicorn facecris_api.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./facecris_api:/app
     ports:
