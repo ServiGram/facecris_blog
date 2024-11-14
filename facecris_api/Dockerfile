@@ -17,5 +17,5 @@ COPY . /app/facecris_api
 WORKDIR /app/facecris_api
 
 # Ejecuta el servidor usando Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "facecris_api.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "wsgi:application"]
 
