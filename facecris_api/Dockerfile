@@ -10,7 +10,7 @@ COPY facecris_api/requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Crea el directorio /app/facecris_api explícitamente y copia los archivos
-RUN mkdir -p /app/facecris_api
+#RUN mkdir -p /app/facecris_api
 COPY facecris_api /app/facecris_api
 
 # Cambia el directorio de trabajo a /app/facecris_api
